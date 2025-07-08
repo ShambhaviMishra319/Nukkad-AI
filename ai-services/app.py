@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from nlp_parser import parse_sales_text
 from pydantic import BaseModel
 from forecast_service import predict_next_day
+from forecast_all import forecast_all
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,6 +33,13 @@ async def parsr_log(req:SalesLogRequest):
 async def forecast(item_id:int):
     predicted_value=predict_next_day(item_id)
     return {"predicted value":predicted_value}
+
+@app.get("/forecast-all/{vendor_id}")
+async def forecastAll(vendorId:int):
+    res=forecast_all(vendorId)
+    return {
+        "result":res
+    }
 
 
 

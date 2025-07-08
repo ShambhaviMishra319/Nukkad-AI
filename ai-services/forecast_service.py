@@ -40,7 +40,6 @@ def load_sales_data(item_id: int) -> pd.DataFrame:
 # Step 3: Predict next day's demand using Prophet
 def predict_next_day(item_id: int):
     df = load_sales_data(item_id)
-    print("DataFrame:\n", df)  # 👈 Add this
 
     if df.empty or len(df) < 2:
         return {"error": "Not enough data to predict"}
