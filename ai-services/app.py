@@ -6,9 +6,13 @@ from forecast_all import forecast_all
 
 from fastapi.middleware.cors import CORSMiddleware
 
-app=FastAPI()
+app = FastAPI(
+    title="Nukkad AI - Smart Sales & Forecast API",
+    description="This API helps vendors log sales via natural language and predicts next-day demand using AI.",
+    version="1.0.0"
+)
 
-#"Hey! If someone wants to send me data, they must send a thing called text, and it has to be a string (like a sentence)."
+#If someone wants to send me data, they must send a thing called text, and it has to be a string (like a sentence)."
 #ex. { "text": "Sold 3 bananas and 2 oranges" }
 class SalesLogRequest(BaseModel):
     text:str
