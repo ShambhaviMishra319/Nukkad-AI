@@ -7,12 +7,15 @@ exports.logSale = async (req, res) => {
   try {
     const parsedItems = await aiService.parseSalesText(text);
 
+    console.log("parsedddd response>>>>>>>>>>>",parsedItems)
+
     for (const entry of parsedItems) {
       const itemName = entry.item;
       const quantity = entry.quantity;
 
       const itemId = await salesModel.getOrCreateItemId(itemName);
       await salesModel.insertSale(vendor_id, itemId, quantity);
+      
     }
 
     res.status(200).json({ message: 'Sales log saved successfully!' });

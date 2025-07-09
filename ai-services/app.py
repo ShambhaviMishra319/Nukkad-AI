@@ -3,6 +3,7 @@ from nlp_parser import parse_sales_text
 from pydantic import BaseModel
 from forecast_service import predict_next_day
 from forecast_all import forecast_all
+from save_parsed_log import router as save_log_router
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -31,6 +32,7 @@ app.add_middleware(
 @app.post('/parse-log')
 async def parsr_log(req:SalesLogRequest):
     parsed_item=parse_sales_text(req.text)
+    print("🔍 Parsed Items:", parsed_item) 
     return { "parsed_items": parsed_item } 
 
 @app.get('/forecast/{item_id}')
@@ -39,11 +41,13 @@ async def forecast(item_id:int):
     return {"predicted value":predicted_value}
 
 @app.get("/forecast-all/{vendor_id}")
-async def forecastAll(vendorId:int):
-    res=forecast_all(vendorId)
+async def forecastAll(vendor_id:int):
+    res=forecast_all(vendor_id)
     return {
         "result":res
     }
+
+app.include_router(save_log_router)
 
 
 

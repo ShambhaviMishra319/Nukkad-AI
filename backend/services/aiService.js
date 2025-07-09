@@ -1,3 +1,4 @@
+//Talks to the AI service (FastAPI)
 const axios = require('axios');
 
 exports.parseSalesText = async (text) => {

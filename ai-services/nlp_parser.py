@@ -12,7 +12,7 @@ def parse_sales_text(text: str) -> List[Dict[str, any]]:
     parsed = []
     for qty, item in matches:
         parsed.append({
-            "item": item.rstrip('s'),  # Remove plural if any
+            "name": item.rstrip('s'),  # Remove plural if any
             "quantity": int(qty)
         })
 

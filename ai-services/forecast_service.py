@@ -17,17 +17,17 @@ def get_db_connection():
     )
 
 # Step 2: Load historical sales for a given item_id
-def load_sales_data(item_id: int) -> pd.DataFrame:
+def load_sales_data(item_id: int, vendor_id: int) -> pd.DataFrame:
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
         SELECT log_date, SUM(quantity)
         FROM sales_logs
-        WHERE item_id = %s
+        WHERE item_id = %s AND vendor_id = %s
         GROUP BY log_date
         ORDER BY log_date ASC
-    """, (item_id,))
+    """, (item_id, vendor_id))
 
     rows = cursor.fetchall()
     cursor.close()
@@ -38,8 +38,9 @@ def load_sales_data(item_id: int) -> pd.DataFrame:
     return df
 
 # Step 3: Predict next day's demand using Prophet
-def predict_next_day(item_id: int):
-    df = load_sales_data(item_id)
+def predict_next_day(item_id: int, vendor_id: int):
+    df = load_sales_data(item_id, vendor_id)
+
 
     if df.empty or len(df) < 2:
         return {"error": "Not enough data to predict"}

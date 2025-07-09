@@ -1,10 +1,11 @@
-const express = require('express');
-const app = express();
-require('dotenv').config();
+const express=require('express')
+const app=express()
 
-const salesRoutes = require('./routes/sales');
+require('dotenv').config()
 
-app.use(express.json());
-app.use('/sales', salesRoutes);
+app.use(express.json())
 
-module.exports = app;
+const salesRoutes=require('./routes/sales')
+app.use('/sales',salesRoutes)
+
+module.exports=app

@@ -7,11 +7,13 @@ load_dotenv()
 
 def get_db_connection():
     return psycopg2.connect(
-        host="",
-        database="",
-        user="",
-        password=""
+        host="localhost",
+        database="nukkadai",
+        user="postgres",
+        password="admin1234"
     )
+
+
 
 def forecast_all(vendor_id: int):
     conn = get_db_connection()
@@ -30,7 +32,8 @@ def forecast_all(vendor_id: int):
     forecasts = []
 
     for item_id in item_ids:
-        prediction = predict_next_day(item_id)
+        prediction = predict_next_day(item_id, vendor_id)
+
         
         if "predicted_quantity" in prediction:
             # Step 2: Insert into forecasts table
